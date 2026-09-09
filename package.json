@@ -1,26 +1,29 @@
 {
-  "name": "journal-app",
-  "version": "0.1.0",
+  "name": "journalx",
+  "version": "1.0.0",
   "private": true,
+  "description": "Personal trading journal application",
+  "packageManager": "pnpm@11.8.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.3.4",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "dev": "pnpm --parallel --filter @journalx/api --filter @journalx/web dev",
+    "dev:api": "pnpm --filter @journalx/api dev",
+    "dev:web": "pnpm --filter @journalx/web dev",
+    "build": "pnpm --filter @journalx/domain build && pnpm --filter @journalx/db build && pnpm --filter @journalx/api build && pnpm --filter @journalx/web build",
+    "typecheck": "pnpm --recursive run typecheck",
+    "lint": "pnpm --recursive run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,css}\"",
+    "db:generate": "pnpm --filter @journalx/db db:generate",
+    "db:migrate": "pnpm --filter @journalx/db db:migrate",
+    "db:seed": "pnpm --filter @journalx/db db:seed",
+    "db:fixtures": "pnpm --filter @journalx/db db:fixtures",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "test": "pnpm --recursive run test"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.3.4",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@types/node": "^22.13.9",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
   }
 }

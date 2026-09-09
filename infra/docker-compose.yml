@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: journalx-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-journalx}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-journalx_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-journalx}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5442}:5432"
+    volumes:
+      - journalx-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-journalx} -d ${POSTGRES_DB:-journalx}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  journalx-postgres-data:
+    name: journalx-postgres-data
