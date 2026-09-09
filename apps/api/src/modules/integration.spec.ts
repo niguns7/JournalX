@@ -272,7 +272,7 @@ describe('JournalX Backend Integration Test Suite (Real PostgreSQL)', () => {
   });
 
   describe('6. Journals & Child Modules', () => {
-    testJournalDate = `2026-09-${String(Math.floor(Math.random() * 20) + 10)}`;
+    testJournalDate = `20${String(Date.now()).slice(-2)}-0${(Date.now() % 8) + 1}-0${(Date.now() % 8) + 1}`;
 
     it('POST /api/v1/journals creates journal idempotently by date and auto-snapshots limits', async () => {
       const res1 = await request(app.getHttpServer())

@@ -31,16 +31,16 @@
 ---
 
 ## Session 3: Frontend implementation
-- [ ] **S3-01**: Verify S2 API/client artifacts.
-- [ ] **S3-02**: Build light Mantine shell and navigation.
-- [ ] **S3-03**: Add generated client adapter, Query provider, and query keys.
-- [ ] **S3-04**: Implement dashboard and journal list/calendar.
-- [ ] **S3-05**: Implement all journal sections and autosave.
-- [ ] **S3-06**: Implement trade plan, recording, management, and review.
-- [ ] **S3-07**: Implement trade log filters and evidence gallery.
-- [ ] **S3-08**: Implement playbook/versioning and settings.
-- [ ] **S3-09**: Implement analytics charts/tables/export action.
-- [ ] **S3-10**: Test critical UI behavior and responsive layout.
+- [x] **S3-01**: Verify S2 API/client artifacts.
+- [x] **S3-02**: Build light Mantine shell and navigation.
+- [x] **S3-03**: Add generated client adapter, Query provider, and query keys.
+- [x] **S3-04**: Implement dashboard and journal list/calendar.
+- [x] **S3-05**: Implement all journal sections and autosave.
+- [x] **S3-06**: Implement trade plan, recording, management, and review.
+- [x] **S3-07**: Implement trade log filters and evidence gallery.
+- [x] **S3-08**: Implement playbook/versioning and settings.
+- [x] **S3-09**: Implement analytics charts/tables/export action.
+- [x] **S3-10**: Test critical UI behavior and responsive layout.
 
 ---
 

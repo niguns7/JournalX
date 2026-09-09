@@ -8,7 +8,7 @@
     "dev": "pnpm --parallel --filter @journalx/api --filter @journalx/web dev",
     "dev:api": "pnpm --filter @journalx/api dev",
     "dev:web": "pnpm --filter @journalx/web dev",
-    "build": "pnpm --filter @journalx/domain build && pnpm --filter @journalx/db build && pnpm --filter @journalx/api build && pnpm --filter @journalx/web build",
+    "build": "pnpm --filter @journalx/domain build && pnpm --filter @journalx/db build && pnpm --filter @journalx/api-client build && pnpm --filter @journalx/api build && pnpm --filter @journalx/web build",
     "typecheck": "pnpm --recursive run typecheck",
     "lint": "pnpm --recursive run lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,css}\"",
@@ -23,6 +23,9 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.9",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
+    "eslint": "^10.10.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
   }
