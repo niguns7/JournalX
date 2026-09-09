@@ -4,6 +4,7 @@ import { appSettings } from '@journalx/db';
 import { eq } from 'drizzle-orm';
 import { UpdateSettingsDto } from './dto/update-settings.dto.js';
 import { AuditService } from '../../common/services/audit.service.js';
+import { AuditAction } from '@journalx/domain';
 
 @Injectable()
 export class SettingsService {
@@ -16,7 +17,6 @@ export class SettingsService {
     const rows = await this.databaseService.db
       .select()
       .from(appSettings)
-      .where(eq(appSettings.singletonKey, 'DEFAULT'))
       .limit(1);
 
     if (rows.length === 0) {
@@ -44,7 +44,7 @@ export class SettingsService {
     if (dto.displayTimezone !== undefined) updatePayload.displayTimezone = dto.displayTimezone;
     if (dto.currency !== undefined) updatePayload.currency = dto.currency;
     if (dto.defaultAccountId !== undefined) updatePayload.defaultAccountId = dto.defaultAccountId;
-    if (dto.preferencesJson !== undefined) updatePayload.preferencesJson = dto.preferencesJson;
+    if (dto.preferencesJson !== undefined) updatePayload.preferences = dto.preferencesJson;
 
     const [updated] = await this.databaseService.db
       .update(appSettings)
@@ -55,7 +55,7 @@ export class SettingsService {
     await this.auditService.record({
       entityType: 'app_settings',
       entityId: current.id,
-      action: 'UPDATE',
+      action: AuditAction.UPDATE,
       beforeJson: current,
       afterJson: updated,
       requestId,

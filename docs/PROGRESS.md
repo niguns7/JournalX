@@ -15,18 +15,18 @@
 ---
 
 ## Session 2: Backend and test cases
-- [ ] **S2-01**: Verify S1 gate and load domain/backend/database skills.
-- [ ] **S2-02**: Implement decimal calculations and rule engine.
-- [ ] **S2-03**: Add global DTO validation, errors, request IDs, env checks.
-- [ ] **S2-04**: Implement settings, accounts, instruments, strategy versioning.
-- [ ] **S2-05**: Implement journal and child resources (windows, events, analyses, zones, scenarios, quarter observations).
-- [ ] **S2-06**: Implement trades and lifecycle (plan/open/close/record/correct/void).
-- [ ] **S2-07**: Add rule evaluation, daily limits, transaction locks, and idempotency.
-- [ ] **S2-08**: Implement file storage and evidence routes.
-- [ ] **S2-09**: Implement trade and daily reviews.
-- [ ] **S2-10**: Implement analytics and exports.
-- [ ] **S2-11**: Generate OpenAPI specification and typed client.
-- [ ] **S2-12**: Run unit and PostgreSQL integration tests.
+- [x] **S2-01**: Verify S1 gate and load domain/backend/database skills.
+- [x] **S2-02**: Implement decimal calculations and rule engine.
+- [x] **S2-03**: Add global DTO validation, errors, request IDs, env checks.
+- [x] **S2-04**: Implement settings, accounts, instruments, strategy versioning.
+- [x] **S2-05**: Implement journal and child resources (windows, events, analyses, zones, scenarios, quarter observations).
+- [x] **S2-06**: Implement trades and lifecycle (plan/open/close/record/correct/void).
+- [x] **S2-07**: Add rule evaluation, daily limits, transaction locks, and idempotency.
+- [x] **S2-08**: Implement file storage and evidence routes.
+- [x] **S2-09**: Implement trade and daily reviews.
+- [x] **S2-10**: Implement analytics and exports.
+- [x] **S2-11**: Generate OpenAPI specification and typed client.
+- [x] **S2-12**: Run unit and PostgreSQL integration tests.
 
 ---
 

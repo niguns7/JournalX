@@ -37,3 +37,31 @@ This document records the design choices, architectural invariants, and constrai
 ## 6. Seed & Fixture Discipline
 - **Decision**: Maintain a strict distinction between minimal configuration seeds (`packages/db/src/seeds/seed.ts`) and test fixtures (`packages/db/src/seeds/fixtures.ts`).
 - **Rationale**: Prevents fictitious or mock trade data from polluting the trader's personal database.
+
+## 7. Pure Domain Calculation Engine
+- **Decision**: Centralize all financial and rule calculations in `@journalx/domain` using `Decimal.js` (arbitrary-precision decimal arithmetic). Decimal values are passed as strings over REST and mapped to PostgreSQL `numeric`.
+- **Rationale**: Completely eliminates floating point inaccuracies and guarantees exact reproduction of all SRS Section 6 test fixtures.
+
+## 8. 10/10 Mandatory Checklist Gate
+- **Decision**: Enforce hard gate validation on trade plans. Every mandatory checklist item must be explicitly answered `PASS` before a trade can be opened or evaluated as `ELIGIBLE`. `NOT_APPLICABLE` is strictly rejected for mandatory items.
+- **Rationale**: Upholds discipline and prevents emotional trade entries.
+
+## 9. Stop-Widening Violation & Initial Risk Invariance
+- **Decision**: Moving stop loss wider than previous level creates a permanent `STOP_WIDENED` violation. `initialRisk` remains permanently frozen at the original trade baseline so R-multiples are never artificially deflated.
+- **Rationale**: Prevents deceptive performance metrics and enforces honest logging.
+
+## 10. Concurrency & Idempotency Key Handling
+- **Decision**: `idempotency_keys` table stores SHA-256 request payload hash and response JSON. Retried requests with matching key return cached response without re-executing. Database transactions lock `journal_account_limits` using `SELECT ... FOR UPDATE` during trade state transitions.
+- **Rationale**: Guarantees zero duplicate execution and ensures strict atomic daily trade limit compliance across concurrent requests.
+
+## 11. File Signature Verification & Storage Compensation
+- **Decision**: Multi-byte binary signature inspection (magic bytes for PNG, JPEG, WebP) independent of client MIME headers. If database insertion fails, an automated compensation step deletes the orphaned file from disk.
+- **Rationale**: Eliminates malware/mime-spoofing risks and prevents disk leaks on failed uploads.
+
+## 12. CSV Formula Sanitization
+- **Decision**: Neutralize dangerous leading characters (`=`, `+`, `-`, `@`) with a leading tab character and quote fields per RFC 4180.
+- **Rationale**: Protects spreadsheets from formula injection attacks upon CSV export.
+
+## 13. End-of-Day Review Gate & Correction Invalidation
+- **Decision**: Daily review completion blocks if any open trade exists or any closed trade has unconfirmed fees. If a trade is corrected post-review, its `reviewedAt` timestamp is automatically invalidated and reset to `null`.
+- **Rationale**: Guarantees metrics reflect fully settled trades with verified brokerage fees.
