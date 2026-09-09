@@ -65,14 +65,13 @@ export const JournalWorkspacePage: React.FC<JournalWorkspacePageProps> = ({
   const [newEventImpact, setNewEventImpact] = useState<any>('HIGH');
   const [newEventNotes, setNewEventNotes] = useState('');
 
-  // Main Journal Query
   const {
     data: journal,
     isLoading,
     error,
   } = useQuery({
     queryKey: queryKeys.journals.byDate(journalDate),
-    queryFn: () => apiClient.journals.getByDate(journalDate),
+    queryFn: () => apiClient.journals.createOrGet({ journalDate }),
   });
 
   // Windows, Events, Analyses, Scenarios Queries

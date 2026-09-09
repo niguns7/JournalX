@@ -1,0 +1,4320 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health/live": {
+      "get": {
+        "operationId": "HealthController_getLive",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "HealthController_getReady",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/settings": {
+      "get": {
+        "operationId": "SettingsController_getSettings",
+        "summary": "Get application settings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Settings retrieved successfully"
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "patch": {
+        "operationId": "SettingsController_updateSettings",
+        "summary": "Update application settings",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSettingsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Settings updated successfully"
+          },
+          "409": {
+            "description": "Optimistic concurrency version conflict"
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/api/v1/accounts": {
+      "get": {
+        "operationId": "AccountsController_listAccounts",
+        "summary": "List trading accounts",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "ACTIVE",
+                "ARCHIVED"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Accounts"
+        ]
+      },
+      "post": {
+        "operationId": "AccountsController_createAccount",
+        "summary": "Create a new trading account",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Account created"
+          }
+        },
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/api/v1/accounts/{id}": {
+      "get": {
+        "operationId": "AccountsController_getAccountById",
+        "summary": "Get trading account by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account found"
+          },
+          "404": {
+            "description": "Account not found"
+          }
+        },
+        "tags": [
+          "Accounts"
+        ]
+      },
+      "patch": {
+        "operationId": "AccountsController_updateAccount",
+        "summary": "Update trading account",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account updated"
+          },
+          "409": {
+            "description": "Version conflict"
+          }
+        },
+        "tags": [
+          "Accounts"
+        ]
+      },
+      "delete": {
+        "operationId": "AccountsController_archiveAccount",
+        "summary": "Archive trading account",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account archived"
+          }
+        },
+        "tags": [
+          "Accounts"
+        ]
+      }
+    },
+    "/api/v1/instruments": {
+      "get": {
+        "operationId": "InstrumentsController_listInstruments",
+        "summary": "List instruments",
+        "parameters": [
+          {
+            "name": "includeArchived",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Instruments"
+        ]
+      },
+      "post": {
+        "operationId": "InstrumentsController_createInstrument",
+        "summary": "Create a new instrument",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInstrumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Instrument created"
+          },
+          "409": {
+            "description": "Symbol conflict"
+          }
+        },
+        "tags": [
+          "Instruments"
+        ]
+      }
+    },
+    "/api/v1/instruments/{id}": {
+      "get": {
+        "operationId": "InstrumentsController_getInstrumentById",
+        "summary": "Get instrument by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instrument found"
+          },
+          "404": {
+            "description": "Instrument not found"
+          }
+        },
+        "tags": [
+          "Instruments"
+        ]
+      },
+      "patch": {
+        "operationId": "InstrumentsController_updateInstrument",
+        "summary": "Update instrument",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInstrumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Instrument updated"
+          }
+        },
+        "tags": [
+          "Instruments"
+        ]
+      },
+      "delete": {
+        "operationId": "InstrumentsController_archiveInstrument",
+        "summary": "Archive instrument",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instrument archived"
+          }
+        },
+        "tags": [
+          "Instruments"
+        ]
+      }
+    },
+    "/api/v1/strategies": {
+      "get": {
+        "operationId": "StrategiesController_listStrategies",
+        "summary": "List all strategies with current published version",
+        "parameters": [
+          {
+            "name": "includeArchived",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      },
+      "post": {
+        "operationId": "StrategiesController_createStrategy",
+        "summary": "Create a new strategy with initial version",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStrategyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Strategy created"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      }
+    },
+    "/api/v1/strategies/{id}": {
+      "get": {
+        "operationId": "StrategiesController_getStrategyById",
+        "summary": "Get strategy by ID with versions",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Strategy found"
+          },
+          "404": {
+            "description": "Strategy not found"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      },
+      "patch": {
+        "operationId": "StrategiesController_updateStrategy",
+        "summary": "Update strategy name/description",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStrategyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Strategy updated"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      },
+      "delete": {
+        "operationId": "StrategiesController_archiveStrategy",
+        "summary": "Archive strategy",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Strategy archived"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      }
+    },
+    "/api/v1/strategies/{id}/versions": {
+      "get": {
+        "operationId": "StrategiesController_listVersions",
+        "summary": "List all versions of a strategy",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      },
+      "post": {
+        "operationId": "StrategiesController_createDraftVersion",
+        "summary": "Create a new draft version for strategy",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStrategyVersionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Draft version created"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      }
+    },
+    "/api/v1/strategies/{id}/versions/{versionId}": {
+      "get": {
+        "operationId": "StrategiesController_getVersionById",
+        "summary": "Get specific strategy version",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "versionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      },
+      "patch": {
+        "operationId": "StrategiesController_updateDraftVersion",
+        "summary": "Update draft version rules/checklist/narrative",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "versionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStrategyVersionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Draft version updated"
+          },
+          "400": {
+            "description": "Cannot update published version"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      }
+    },
+    "/api/v1/strategies/{id}/versions/{versionId}/publish": {
+      "post": {
+        "operationId": "StrategiesController_publishVersion",
+        "summary": "Publish strategy version making it immutable",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "versionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Version published successfully"
+          }
+        },
+        "tags": [
+          "Strategies"
+        ]
+      }
+    },
+    "/api/v1/journals": {
+      "post": {
+        "operationId": "JournalsController_createOrGetJournal",
+        "summary": "Create or get existing journal for calendar date (idempotent)",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJournalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Journal created or retrieved"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "get": {
+        "operationId": "JournalsController_listJournals",
+        "summary": "List journals with optional filters and pagination",
+        "parameters": [
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "DRAFT",
+                "ACTIVE",
+                "REVIEWED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "grade",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/by-date/{date}": {
+      "get": {
+        "operationId": "JournalsController_getJournalByDate",
+        "summary": "Get journal by date (YYYY-MM-DD)",
+        "parameters": [
+          {
+            "name": "date",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Journal found"
+          },
+          "404": {
+            "description": "Journal not found"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}": {
+      "get": {
+        "operationId": "JournalsController_getJournalById",
+        "summary": "Get journal by ID with all sections",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Journal found"
+          },
+          "404": {
+            "description": "Journal not found"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "patch": {
+        "operationId": "JournalsController_updateJournal",
+        "summary": "Update journal preparation, readiness, and notes",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJournalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Journal updated"
+          },
+          "409": {
+            "description": "Version conflict"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/activate": {
+      "post": {
+        "operationId": "JournalsController_activateJournal",
+        "summary": "Activate daily journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Journal activated"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/complete-review": {
+      "post": {
+        "operationId": "JournalsController_completeReview",
+        "summary": "Complete end-of-day review (blocks if open trades or unconfirmed fees)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteJournalReviewDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review completed"
+          },
+          "400": {
+            "description": "Review blocked by pending trades or fees"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/reopen": {
+      "post": {
+        "operationId": "JournalsController_reopenJournal",
+        "summary": "Reopen reviewed journal with mandatory audit reason",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReopenJournalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Journal reopened"
+          },
+          "400": {
+            "description": "Missing reason"
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/windows": {
+      "get": {
+        "operationId": "JournalsController_listWindows",
+        "summary": "List trading windows for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "post": {
+        "operationId": "JournalsController_createWindow",
+        "summary": "Create trading window for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWindowDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/windows/{windowId}": {
+      "patch": {
+        "operationId": "JournalsController_updateWindow",
+        "summary": "Update trading window",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "windowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWindowDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "delete": {
+        "operationId": "JournalsController_deleteWindow",
+        "summary": "Delete trading window",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "windowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/events": {
+      "get": {
+        "operationId": "JournalsController_listEvents",
+        "summary": "List economic events for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "post": {
+        "operationId": "JournalsController_createEvent",
+        "summary": "Create economic event for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEconomicEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/events/{eventId}": {
+      "patch": {
+        "operationId": "JournalsController_updateEvent",
+        "summary": "Update economic event",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eventId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEconomicEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "delete": {
+        "operationId": "JournalsController_deleteEvent",
+        "summary": "Delete economic event",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eventId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/analyses": {
+      "get": {
+        "operationId": "JournalsController_listAnalyses",
+        "summary": "List timeframe analyses for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "post": {
+        "operationId": "JournalsController_createAnalysis",
+        "summary": "Create timeframe analysis for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTimeframeAnalysisDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/analyses/{analysisId}": {
+      "patch": {
+        "operationId": "JournalsController_updateAnalysis",
+        "summary": "Update timeframe analysis",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "analysisId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTimeframeAnalysisDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "delete": {
+        "operationId": "JournalsController_deleteAnalysis",
+        "summary": "Delete timeframe analysis",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "analysisId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/analyses/{analysisId}/zones": {
+      "get": {
+        "operationId": "JournalsController_listZones",
+        "summary": "List market zones for analysis",
+        "parameters": [
+          {
+            "name": "analysisId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "post": {
+        "operationId": "JournalsController_createZone",
+        "summary": "Create market zone",
+        "parameters": [
+          {
+            "name": "analysisId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMarketZoneDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/analyses/{analysisId}/zones/{zoneId}": {
+      "patch": {
+        "operationId": "JournalsController_updateZone",
+        "summary": "Update market zone",
+        "parameters": [
+          {
+            "name": "analysisId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "zoneId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMarketZoneDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "delete": {
+        "operationId": "JournalsController_deleteZone",
+        "summary": "Delete market zone",
+        "parameters": [
+          {
+            "name": "analysisId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "zoneId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/scenarios": {
+      "get": {
+        "operationId": "JournalsController_listScenarios",
+        "summary": "List scenarios for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "post": {
+        "operationId": "JournalsController_createScenario",
+        "summary": "Create scenario for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScenarioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/scenarios/{scenarioId}": {
+      "patch": {
+        "operationId": "JournalsController_updateScenario",
+        "summary": "Update scenario",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scenarioId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateScenarioDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "delete": {
+        "operationId": "JournalsController_deleteScenario",
+        "summary": "Delete scenario",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scenarioId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/windows/{windowId}/quarters": {
+      "get": {
+        "operationId": "JournalsController_listQuarters",
+        "summary": "List quarter observations for window",
+        "parameters": [
+          {
+            "name": "windowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "post": {
+        "operationId": "JournalsController_createQuarter",
+        "summary": "Create quarter observation for window",
+        "parameters": [
+          {
+            "name": "windowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQuarterObservationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/windows/{windowId}/quarters/{quarterObsId}": {
+      "patch": {
+        "operationId": "JournalsController_updateQuarter",
+        "summary": "Update quarter observation",
+        "parameters": [
+          {
+            "name": "windowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quarterObsId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuarterObservationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      },
+      "delete": {
+        "operationId": "JournalsController_deleteQuarter",
+        "summary": "Delete quarter observation",
+        "parameters": [
+          {
+            "name": "windowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "quarterObsId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/journals/{id}/limits/{accountId}": {
+      "put": {
+        "operationId": "JournalsController_updateAccountLimit",
+        "summary": "Update account limits snapshot for journal",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "accountId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJournalAccountLimitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Journals"
+        ]
+      }
+    },
+    "/api/v1/trades": {
+      "get": {
+        "operationId": "TradesController_listTrades",
+        "summary": "List trades with filtering and pagination",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size (max 100)",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          },
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "journalId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "PLANNED",
+                "OPEN",
+                "CLOSED",
+                "CANCELLED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "outcome",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "WIN",
+                "LOSS",
+                "BREAKEVEN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeVoided",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      },
+      "post": {
+        "operationId": "TradesController_createTradePlan",
+        "summary": "Create a new planned trade",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTradePlanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Trade plan created"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}": {
+      "get": {
+        "operationId": "TradesController_getTradeById",
+        "summary": "Get trade by ID with all details",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trade found"
+          },
+          "404": {
+            "description": "Trade not found"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      },
+      "patch": {
+        "operationId": "TradesController_updateTradePlan",
+        "summary": "Update a planned trade",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTradePlanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trade plan updated"
+          },
+          "400": {
+            "description": "Not in PLANNED state"
+          },
+          "409": {
+            "description": "Version conflict"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/evaluate": {
+      "post": {
+        "operationId": "TradesController_evaluateTrade",
+        "summary": "Evaluate trade eligibility against rules and daily limits",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/cancel": {
+      "post": {
+        "operationId": "TradesController_cancelTradePlan",
+        "summary": "Cancel a planned trade",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trade cancelled"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/open": {
+      "post": {
+        "operationId": "TradesController_openTrade",
+        "summary": "Open trade execution (freezes snapshot, checks locks and limits)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idempotency-key",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenTradeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trade opened"
+          },
+          "409": {
+            "description": "Version conflict or idempotency mismatch"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/record-execution": {
+      "post": {
+        "operationId": "TradesController_recordExecution",
+        "summary": "Atomically record retrospective trade execution (OPEN or CLOSED)",
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordExecutionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Execution recorded"
+          },
+          "409": {
+            "description": "Idempotency conflict"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/close": {
+      "post": {
+        "operationId": "TradesController_closeTrade",
+        "summary": "Close an open trade and calculate realized metrics",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idempotency-key",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseTradeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trade closed"
+          },
+          "409": {
+            "description": "Version conflict or idempotency mismatch"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/management-events": {
+      "post": {
+        "operationId": "TradesController_addManagementEvent",
+        "summary": "Record management event (stop loss / take profit move)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddManagementEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Management event added"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/checklist": {
+      "put": {
+        "operationId": "TradesController_saveChecklistAnswers",
+        "summary": "Save checklist answers for trade",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveChecklistAnswersDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/review": {
+      "post": {
+        "operationId": "TradesController_reviewTrade",
+        "summary": "Review closed trade (requires confirmed fees)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewTradeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trade reviewed"
+          },
+          "400": {
+            "description": "Unconfirmed fees or trade not closed"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/correct": {
+      "post": {
+        "operationId": "TradesController_correctTrade",
+        "summary": "Audited correction of closed trade execution",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorrectTradeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trade corrected"
+          },
+          "409": {
+            "description": "Version conflict"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/trades/{id}/void": {
+      "post": {
+        "operationId": "TradesController_voidTrade",
+        "summary": "Void trade with mandatory reason",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoidTradeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trade voided"
+          },
+          "409": {
+            "description": "Version conflict"
+          }
+        },
+        "tags": [
+          "Trades"
+        ]
+      }
+    },
+    "/api/v1/attachments": {
+      "post": {
+        "operationId": "AttachmentsController_uploadAttachment",
+        "summary": "Upload chart screenshot evidence (PNG, JPEG, WebP, max 10MB)",
+        "parameters": [
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadAttachmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "File uploaded"
+          },
+          "413": {
+            "description": "Payload too large (>10MB)"
+          },
+          "415": {
+            "description": "Unsupported media type"
+          }
+        },
+        "tags": [
+          "Attachments"
+        ]
+      }
+    },
+    "/api/v1/attachments/{id}": {
+      "get": {
+        "operationId": "AttachmentsController_getAttachmentById",
+        "summary": "Get attachment metadata",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment metadata"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "tags": [
+          "Attachments"
+        ]
+      },
+      "delete": {
+        "operationId": "AttachmentsController_deleteAttachment",
+        "summary": "Delete attachment and file",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-request-id",
+            "required": false,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment deleted"
+          }
+        },
+        "tags": [
+          "Attachments"
+        ]
+      }
+    },
+    "/api/v1/attachments/{id}/content": {
+      "get": {
+        "operationId": "AttachmentsController_getAttachmentContent",
+        "summary": "Stream attachment image content",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Binary image stream"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "tags": [
+          "Attachments"
+        ]
+      }
+    },
+    "/api/v1/analytics/summary": {
+      "get": {
+        "operationId": "AnalyticsController_getSummary",
+        "summary": "Get aggregate performance summary and key metrics",
+        "parameters": [
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "b947c617-640a-4061-9c86-f61b7fcf7c73",
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/api/v1/analytics/daily": {
+      "get": {
+        "operationId": "AnalyticsController_getDaily",
+        "summary": "Get daily aggregated trade results",
+        "parameters": [
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "b947c617-640a-4061-9c86-f61b7fcf7c73",
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/api/v1/analytics/equity": {
+      "get": {
+        "operationId": "AnalyticsController_getEquityCurve",
+        "summary": "Get realized trade equity curve and drawdown series",
+        "parameters": [
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "b947c617-640a-4061-9c86-f61b7fcf7c73",
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/api/v1/analytics/breakdowns": {
+      "get": {
+        "operationId": "AnalyticsController_getBreakdowns",
+        "summary": "Get breakdowns by direction, window, and setups",
+        "parameters": [
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "b947c617-640a-4061-9c86-f61b7fcf7c73",
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/api/v1/analytics/discipline": {
+      "get": {
+        "operationId": "AnalyticsController_getDiscipline",
+        "summary": "Get discipline metrics and good loss / bad win matrix",
+        "parameters": [
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "b947c617-640a-4061-9c86-f61b7fcf7c73",
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-09-30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/api/v1/exports/trades.csv": {
+      "get": {
+        "operationId": "ExportsController_exportTradesCsv",
+        "summary": "Export filtered trades as CSV",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Page size (max 100)",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          },
+          {
+            "name": "accountId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "journalId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "PLANNED",
+                "OPEN",
+                "CLOSED",
+                "CANCELLED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "outcome",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "WIN",
+                "LOSS",
+                "BREAKEVEN"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "strategyId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeVoided",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CSV file download"
+          }
+        },
+        "tags": [
+          "Exports"
+        ]
+      }
+    },
+    "/api/v1/exports/journals.csv": {
+      "get": {
+        "operationId": "ExportsController_exportJournalsCsv",
+        "summary": "Export filtered journals as CSV",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "CSV file download"
+          }
+        },
+        "tags": [
+          "Exports"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "JournalX API",
+    "description": "Personal Trading Journal REST API Specification",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "Settings",
+      "description": "Application singleton preferences"
+    },
+    {
+      "name": "Accounts",
+      "description": "Personal trading accounts"
+    },
+    {
+      "name": "Instruments",
+      "description": "Market instruments and specifications"
+    },
+    {
+      "name": "Strategies",
+      "description": "Strategy definitions and immutable versions"
+    },
+    {
+      "name": "Journals",
+      "description": "Daily journals, preparation, analyses, and reviews"
+    },
+    {
+      "name": "Trades",
+      "description": "Trade lifecycle, execution, management, and review"
+    },
+    {
+      "name": "Attachments",
+      "description": "Chart screenshot uploads and evidence"
+    },
+    {
+      "name": "Analytics",
+      "description": "Performance metrics and equity curves"
+    },
+    {
+      "name": "Exports",
+      "description": "CSV exports"
+    },
+    {
+      "name": "Health",
+      "description": "System health and readiness probes"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "UpdateSettingsDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version for optimistic concurrency"
+          },
+          "journalTimezone": {
+            "type": "string",
+            "example": "Asia/Kathmandu"
+          },
+          "displayTimezone": {
+            "type": "string",
+            "example": "Asia/Kathmandu"
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          },
+          "defaultAccountId": {
+            "type": "object",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "preferencesJson": {
+            "type": "object"
+          }
+        }
+      },
+      "CreateAccountDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Apex 50K Evaluation #1"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "EVALUATION",
+              "SIM_FUNDED",
+              "LIVE",
+              "PAPER",
+              "REPLAY"
+            ],
+            "default": "EVALUATION"
+          },
+          "currency": {
+            "type": "string",
+            "default": "USD"
+          },
+          "nominalSize": {
+            "type": "string",
+            "example": "50000.00"
+          },
+          "riskBasisAmount": {
+            "type": "string",
+            "example": "2500.00"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ARCHIVED"
+            ],
+            "default": "ACTIVE"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "riskDefaultsJson": {
+            "type": "object",
+            "example": {
+              "maxDailyTrades": 3,
+              "maxDailyLoss": "500.00",
+              "consecutiveLossLimit": 2,
+              "maxContractsPerTrade": 5,
+              "maxRiskPerTrade": "250.00"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "UpdateAccountDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "EVALUATION",
+              "SIM_FUNDED",
+              "LIVE",
+              "PAPER",
+              "REPLAY"
+            ]
+          },
+          "currency": {
+            "type": "string"
+          },
+          "nominalSize": {
+            "type": "string"
+          },
+          "riskBasisAmount": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ARCHIVED"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "riskDefaultsJson": {
+            "type": "object"
+          }
+        }
+      },
+      "CreateInstrumentDto": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "example": "MGC"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "Micro Gold Futures"
+          },
+          "tickSize": {
+            "type": "string",
+            "example": "0.100000"
+          },
+          "pointValue": {
+            "type": "string",
+            "example": "10.000000"
+          },
+          "currency": {
+            "type": "string",
+            "default": "USD"
+          },
+          "verifiedSource": {
+            "type": "string",
+            "example": "CME Group MGC Contract Specifications"
+          },
+          "verifiedAt": {
+            "type": "string",
+            "example": "2026-09-08T00:00:00.000Z"
+          }
+        },
+        "required": [
+          "symbol",
+          "displayName",
+          "tickSize",
+          "pointValue"
+        ]
+      },
+      "UpdateInstrumentDto": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "tickSize": {
+            "type": "string"
+          },
+          "pointValue": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "verifiedSource": {
+            "type": "string"
+          },
+          "verifiedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateStrategyDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "MGC Top-Down Sweep Confirmation v1"
+          },
+          "description": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "object",
+            "example": {
+              "maxContracts": 5,
+              "maxStructuralStopPoints": "5.000000",
+              "minPlannedRR": "2.000000",
+              "consecutiveLossStopCount": 2,
+              "maxRiskPerTradeDollars": "250.00"
+            }
+          },
+          "checklist": {
+            "type": "object",
+            "example": {
+              "items": [
+                {
+                  "key": "htf_context",
+                  "label": "Higher-timeframe context",
+                  "isMandatory": true,
+                  "order": 1
+                }
+              ]
+            }
+          },
+          "narrative": {
+            "type": "string"
+          },
+          "publishImmediately": {
+            "type": "boolean",
+            "default": false,
+            "description": "Immediately publish initial version"
+          }
+        },
+        "required": [
+          "name",
+          "rules",
+          "checklist"
+        ]
+      },
+      "UpdateStrategyDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateStrategyVersionDto": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "object",
+            "example": {
+              "maxContracts": 5,
+              "maxStructuralStopPoints": "5.000000",
+              "minPlannedRR": "2.000000",
+              "consecutiveLossStopCount": 2,
+              "maxRiskPerTradeDollars": "250.00"
+            }
+          },
+          "checklist": {
+            "type": "object",
+            "example": {
+              "items": [
+                {
+                  "key": "htf_context",
+                  "label": "Higher-timeframe context",
+                  "isMandatory": true,
+                  "order": 1
+                }
+              ]
+            }
+          },
+          "narrative": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rules",
+          "checklist"
+        ]
+      },
+      "UpdateStrategyVersionDto": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "object"
+          },
+          "checklist": {
+            "type": "object"
+          },
+          "narrative": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateJournalDto": {
+        "type": "object",
+        "properties": {
+          "journalDate": {
+            "type": "string",
+            "example": "2026-09-09",
+            "description": "Journal calendar date (YYYY-MM-DD)"
+          },
+          "timezoneSnapshot": {
+            "type": "string",
+            "example": "Asia/Kathmandu"
+          }
+        },
+        "required": [
+          "journalDate"
+        ]
+      },
+      "UpdateJournalDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected version for optimistic concurrency"
+          },
+          "sleepQuality": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "focusRating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "stressRating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "emotionalState": {
+            "type": "string"
+          },
+          "preparationNotes": {
+            "type": "string"
+          },
+          "readiness": {
+            "type": "object"
+          },
+          "processEvaluation": {
+            "type": "object"
+          },
+          "reflection": {
+            "type": "object"
+          },
+          "gradeOverride": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "gradeOverrideReason": {
+            "type": "string"
+          }
+        }
+      },
+      "CompleteJournalReviewDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "isNoTradeDay": {
+            "type": "boolean",
+            "description": "Is this a disciplined no-trade day?"
+          },
+          "reflection": {
+            "type": "object"
+          },
+          "processEvaluation": {
+            "type": "object"
+          },
+          "gradeOverride": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "gradeOverrideReason": {
+            "type": "string"
+          }
+        }
+      },
+      "ReopenJournalDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "example": "Need to record an omitted late London execution"
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "CreateWindowDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "London Silver Bullet"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/London"
+          },
+          "startsAt": {
+            "type": "string",
+            "example": "2026-09-09T07:00:00.000Z"
+          },
+          "endsAt": {
+            "type": "string",
+            "example": "2026-09-09T10:00:00.000Z"
+          },
+          "quarterConfig": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "label",
+          "timezone",
+          "startsAt",
+          "endsAt"
+        ]
+      },
+      "UpdateWindowDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string"
+          },
+          "endsAt": {
+            "type": "string"
+          },
+          "quarterConfig": {
+            "type": "object"
+          }
+        }
+      },
+      "CreateEconomicEventDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "US CPI Release"
+          },
+          "occursAt": {
+            "type": "string",
+            "example": "2026-09-09T12:30:00.000Z"
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ],
+            "default": "LOW"
+          },
+          "restrictionStart": {
+            "type": "string",
+            "example": "2026-09-09T12:25:00.000Z"
+          },
+          "restrictionEnd": {
+            "type": "string",
+            "example": "2026-09-09T12:35:00.000Z"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "checkedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "occursAt"
+        ]
+      },
+      "UpdateEconomicEventDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "occursAt": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "restrictionStart": {
+            "type": "string"
+          },
+          "restrictionEnd": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "checkedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateTimeframeAnalysisDto": {
+        "type": "object",
+        "properties": {
+          "windowId": {
+            "type": "object",
+            "example": "window-uuid"
+          },
+          "timeframe": {
+            "type": "string",
+            "enum": [
+              "4H",
+              "1H",
+              "15M",
+              "5M",
+              "1M"
+            ],
+            "example": "4H"
+          },
+          "data": {
+            "type": "object"
+          },
+          "narrative": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "timeframe"
+        ]
+      },
+      "UpdateTimeframeAnalysisDto": {
+        "type": "object",
+        "properties": {
+          "windowId": {
+            "type": "object"
+          },
+          "data": {
+            "type": "object"
+          },
+          "narrative": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateMarketZoneDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "SUPPLY",
+              "DEMAND",
+              "PREMIUM_FVG",
+              "DISCOUNT_FVG",
+              "ORDER_BLOCK",
+              "LIQUIDITY_POOL",
+              "OTHER"
+            ],
+            "example": "SUPPLY"
+          },
+          "lowerPrice": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "upperPrice": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "confluence": {
+            "type": "object"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "lowerPrice",
+          "upperPrice"
+        ]
+      },
+      "UpdateMarketZoneDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "SUPPLY",
+              "DEMAND",
+              "PREMIUM_FVG",
+              "DISCOUNT_FVG",
+              "ORDER_BLOCK",
+              "LIQUIDITY_POOL",
+              "OTHER"
+            ]
+          },
+          "lowerPrice": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "upperPrice": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "confluence": {
+            "type": "object"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateScenarioDto": {
+        "type": "object",
+        "properties": {
+          "windowId": {
+            "type": "object"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "SHORT",
+              "LONG",
+              "NO_TRADE"
+            ],
+            "example": "SHORT"
+          },
+          "conditions": {
+            "type": "object"
+          },
+          "narrative": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "UpdateScenarioDto": {
+        "type": "object",
+        "properties": {
+          "windowId": {
+            "type": "object"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "SHORT",
+              "LONG",
+              "NO_TRADE"
+            ]
+          },
+          "conditions": {
+            "type": "object"
+          },
+          "narrative": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateQuarterObservationDto": {
+        "type": "object",
+        "properties": {
+          "quarter": {
+            "type": "string",
+            "enum": [
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4"
+            ],
+            "example": "Q1"
+          },
+          "startsAt": {
+            "type": "string",
+            "example": "2026-09-09T07:00:00.000Z"
+          },
+          "endsAt": {
+            "type": "string",
+            "example": "2026-09-09T07:45:00.000Z"
+          },
+          "rangeHigh": {
+            "type": "string",
+            "example": "4440.000000"
+          },
+          "rangeLow": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "trueOpenPrice": {
+            "type": "string",
+            "example": "4433.000000"
+          },
+          "model": {
+            "type": "string",
+            "enum": [
+              "AMD",
+              "XAMD",
+              "UNKNOWN"
+            ],
+            "default": "UNKNOWN"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "quarter",
+          "startsAt",
+          "endsAt"
+        ]
+      },
+      "UpdateQuarterObservationDto": {
+        "type": "object",
+        "properties": {
+          "startsAt": {
+            "type": "string"
+          },
+          "endsAt": {
+            "type": "string"
+          },
+          "rangeHigh": {
+            "type": "string",
+            "example": "4440.000000"
+          },
+          "rangeLow": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "trueOpenPrice": {
+            "type": "string",
+            "example": "4433.000000"
+          },
+          "model": {
+            "type": "string",
+            "enum": [
+              "AMD",
+              "XAMD",
+              "UNKNOWN"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateJournalAccountLimitDto": {
+        "type": "object",
+        "properties": {
+          "maxTrades": {
+            "type": "number",
+            "example": 3
+          },
+          "maxDailyLoss": {
+            "type": "string",
+            "example": "500.00"
+          },
+          "consecutiveLossLimit": {
+            "type": "number",
+            "example": 2
+          }
+        }
+      },
+      "ChecklistAnswerItemDto": {
+        "type": "object",
+        "properties": {
+          "itemKey": {
+            "type": "string",
+            "example": "htf_context"
+          },
+          "answer": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNANSWERED",
+              "NOT_APPLICABLE"
+            ],
+            "example": "PASS"
+          },
+          "evidenceNote": {
+            "type": "string",
+            "example": "4H bullish FVG respected at 4430"
+          }
+        },
+        "required": [
+          "itemKey",
+          "answer"
+        ]
+      },
+      "CreateTradePlanDto": {
+        "type": "object",
+        "properties": {
+          "journalId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "accountId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "instrumentId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "strategyVersionId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "windowId": {
+            "type": "object"
+          },
+          "scenarioId": {
+            "type": "object"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "LONG",
+              "SHORT"
+            ],
+            "example": "LONG"
+          },
+          "actualContractSymbol": {
+            "type": "string",
+            "example": "MGCZ26"
+          },
+          "plannedEntry": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "originalStop": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "originalTarget": {
+            "type": "string",
+            "example": "4445.000000"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          },
+          "checklistAnswers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChecklistAnswerItemDto"
+            }
+          }
+        },
+        "required": [
+          "journalId",
+          "accountId",
+          "instrumentId",
+          "strategyVersionId",
+          "direction",
+          "plannedEntry",
+          "originalStop",
+          "originalTarget",
+          "quantity"
+        ]
+      },
+      "UpdateTradePlanDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "plannedEntry": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "originalStop": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "originalTarget": {
+            "type": "string",
+            "example": "4445.000000"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          },
+          "actualContractSymbol": {
+            "type": "string"
+          },
+          "windowId": {
+            "type": "object"
+          },
+          "scenarioId": {
+            "type": "object"
+          }
+        }
+      },
+      "OpenTradeDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "actualEntry": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "entryAt": {
+            "type": "string",
+            "example": "2026-09-09T08:15:00.000Z"
+          },
+          "actualContractSymbol": {
+            "type": "string",
+            "example": "MGCZ26"
+          },
+          "acknowledgeViolations": {
+            "type": "boolean",
+            "description": "Acknowledge rule violations if opening non-compliant execution"
+          }
+        },
+        "required": [
+          "actualEntry",
+          "entryAt"
+        ]
+      },
+      "RecordExecutionDto": {
+        "type": "object",
+        "properties": {
+          "journalId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "accountId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "instrumentId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "strategyVersionId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "windowId": {
+            "type": "object"
+          },
+          "scenarioId": {
+            "type": "object"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "LONG",
+              "SHORT"
+            ],
+            "example": "LONG"
+          },
+          "actualEntry": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "originalStop": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "originalTarget": {
+            "type": "string",
+            "example": "4445.000000"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          },
+          "entryAt": {
+            "type": "string",
+            "example": "2026-09-09T08:15:00.000Z"
+          },
+          "actualContractSymbol": {
+            "type": "string",
+            "example": "MGCZ26"
+          },
+          "exitPrice": {
+            "type": "string",
+            "example": "4445.000000"
+          },
+          "exitAt": {
+            "type": "string",
+            "example": "2026-09-09T08:45:00.000Z"
+          },
+          "actualFees": {
+            "type": "string",
+            "example": "12.50"
+          },
+          "feesConfirmed": {
+            "type": "boolean",
+            "default": true
+          },
+          "checklistAnswers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChecklistAnswerItemDto"
+            }
+          },
+          "acknowledgeViolations": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "journalId",
+          "accountId",
+          "instrumentId",
+          "strategyVersionId",
+          "direction",
+          "actualEntry",
+          "originalStop",
+          "originalTarget",
+          "quantity",
+          "entryAt"
+        ]
+      },
+      "CloseTradeDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "exitPrice": {
+            "type": "string",
+            "example": "4445.000000"
+          },
+          "exitAt": {
+            "type": "string",
+            "example": "2026-09-09T08:45:00.000Z"
+          },
+          "actualFees": {
+            "type": "string",
+            "example": "12.50"
+          },
+          "feesConfirmed": {
+            "type": "boolean",
+            "default": true
+          },
+          "observedAdversePoints": {
+            "type": "string",
+            "example": "1.200000"
+          },
+          "observedFavorablePoints": {
+            "type": "string",
+            "example": "10.500000"
+          }
+        },
+        "required": [
+          "exitPrice",
+          "exitAt"
+        ]
+      },
+      "AddManagementEventDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "STOP_LOSS_UPDATE",
+              "TAKE_PROFIT_UPDATE",
+              "NOTE"
+            ],
+            "example": "STOP_LOSS_UPDATE"
+          },
+          "newValue": {
+            "type": "string",
+            "example": "4432.000000"
+          },
+          "reason": {
+            "type": "string",
+            "example": "Moved stop to breakeven after 1R reached"
+          }
+        },
+        "required": [
+          "kind",
+          "newValue"
+        ]
+      },
+      "SaveChecklistAnswersDto": {
+        "type": "object",
+        "properties": {
+          "answers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChecklistAnswerItemDto"
+            }
+          }
+        },
+        "required": [
+          "answers"
+        ]
+      },
+      "ReviewTradeDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "review": {
+            "type": "object",
+            "example": {
+              "notes": "Executed cleanly according to plan",
+              "followedPlan": true,
+              "entryExecutionRating": 10,
+              "managementRating": 9,
+              "exitRating": 10,
+              "emotionalDisciplineRating": 10,
+              "lessonsLearned": "Patience at 15M POI paid off"
+            }
+          }
+        },
+        "required": [
+          "review"
+        ]
+      },
+      "CorrectTradeDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version for optimistic concurrency"
+          },
+          "reason": {
+            "type": "string",
+            "example": "Broker fill statement showed actual exit at 4444.80 instead of 4445.00"
+          },
+          "actualEntry": {
+            "type": "string",
+            "example": "4435.000000"
+          },
+          "originalStop": {
+            "type": "string",
+            "example": "4430.000000"
+          },
+          "originalTarget": {
+            "type": "string",
+            "example": "4445.000000"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          },
+          "exitPrice": {
+            "type": "string",
+            "example": "4444.800000"
+          },
+          "exitAt": {
+            "type": "string"
+          },
+          "actualFees": {
+            "type": "string",
+            "example": "12.50"
+          },
+          "feesConfirmed": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "reason"
+        ]
+      },
+      "VoidTradeDto": {
+        "type": "object",
+        "properties": {
+          "expectedVersion": {
+            "type": "number",
+            "description": "Expected aggregate version"
+          },
+          "reason": {
+            "type": "string",
+            "example": "Accidentally recorded duplicate trade entry"
+          }
+        },
+        "required": [
+          "expectedVersion",
+          "reason"
+        ]
+      },
+      "UploadAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "journalId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "tradeId": {
+            "type": "string",
+            "example": "b947c617-640a-4061-9c86-f61b7fcf7c73"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "BEFORE",
+              "ENTRY",
+              "AFTER",
+              "TIMEFRAME"
+            ],
+            "example": "ENTRY"
+          },
+          "timeframe": {
+            "type": "string",
+            "example": "5M"
+          },
+          "caption": {
+            "type": "string",
+            "example": "5M MSS and FVG entry test confirmation"
+          }
+        }
+      }
+    }
+  }
+}

@@ -73,7 +73,9 @@ export class JournalXApiClient {
       query?: Record<string, string | number | boolean | undefined>;
     } = {},
   ): Promise<T> {
-    const url = new URL(`${this.baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`);
+    const origin = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : 'http://127.0.0.1:3000';
+    const path = `${this.baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+    const url = new URL(path, origin);
 
     if (options.query) {
       for (const [key, value] of Object.entries(options.query)) {
@@ -666,7 +668,8 @@ export class JournalXApiClient {
   // Exports
   readonly exports = {
     getTradesCsvUrl: (query?: Record<string, string | undefined>) => {
-      const u = new URL(`${this.baseUrl}/exports/trades.csv`);
+      const origin = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : 'http://127.0.0.1:3000';
+      const u = new URL(`${this.baseUrl}/exports/trades.csv`, origin);
       if (query) {
         for (const [k, v] of Object.entries(query)) {
           if (v !== undefined) u.searchParams.append(k, v);
@@ -675,7 +678,8 @@ export class JournalXApiClient {
       return u.toString();
     },
     getJournalsCsvUrl: (from?: string, to?: string) => {
-      const u = new URL(`${this.baseUrl}/exports/journals.csv`);
+      const origin = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : 'http://127.0.0.1:3000';
+      const u = new URL(`${this.baseUrl}/exports/journals.csv`, origin);
       if (from) u.searchParams.append('from', from);
       if (to) u.searchParams.append('to', to);
       return u.toString();

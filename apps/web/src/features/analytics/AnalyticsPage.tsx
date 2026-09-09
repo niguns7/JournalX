@@ -30,7 +30,7 @@ import {
 } from '../../lib/formatters.js';
 
 export const AnalyticsPage: React.FC = () => {
-  const [selectedAccountId, setSelectedAccountId] = useState<string>('acc-demo-50k');
+  const [selectedAccountId, setSelectedAccountId] = useState<string>('');
   const [dateRange, setDateRange] = useState<string>('all');
 
   const { data: accounts = [] } = useQuery({
@@ -38,24 +38,30 @@ export const AnalyticsPage: React.FC = () => {
     queryFn: () => apiClient.accounts.list(),
   });
 
+  React.useEffect(() => {
+    if (accounts.length > 0 && !selectedAccountId) {
+      setSelectedAccountId(accounts[0].id);
+    }
+  }, [accounts, selectedAccountId]);
+
   const { data: summary } = useQuery({
-    queryKey: queryKeys.analytics.summary({ accountId: selectedAccountId }),
-    queryFn: () => apiClient.analytics.getSummary({ accountId: selectedAccountId }),
+    queryKey: queryKeys.analytics.summary({ accountId: selectedAccountId || undefined }),
+    queryFn: () => apiClient.analytics.getSummary({ accountId: selectedAccountId || undefined }),
   });
 
   const { data: equity = [] } = useQuery({
-    queryKey: queryKeys.analytics.equity({ accountId: selectedAccountId }),
-    queryFn: () => apiClient.analytics.getEquity({ accountId: selectedAccountId }),
+    queryKey: queryKeys.analytics.equity({ accountId: selectedAccountId || undefined }),
+    queryFn: () => apiClient.analytics.getEquity({ accountId: selectedAccountId || undefined }),
   });
 
   const { data: daily = [] } = useQuery({
-    queryKey: queryKeys.analytics.daily({ accountId: selectedAccountId }),
-    queryFn: () => apiClient.analytics.getDaily({ accountId: selectedAccountId }),
+    queryKey: queryKeys.analytics.daily({ accountId: selectedAccountId || undefined }),
+    queryFn: () => apiClient.analytics.getDaily({ accountId: selectedAccountId || undefined }),
   });
 
   const { data: breakdowns } = useQuery({
-    queryKey: queryKeys.analytics.breakdowns({ accountId: selectedAccountId }),
-    queryFn: () => apiClient.analytics.getBreakdowns({ accountId: selectedAccountId }),
+    queryKey: queryKeys.analytics.breakdowns({ accountId: selectedAccountId || undefined }),
+    queryFn: () => apiClient.analytics.getBreakdowns({ accountId: selectedAccountId || undefined }),
   });
 
   const { data: discipline } = useQuery({

@@ -27,7 +27,9 @@ export const isFixtureMode =
     (import.meta as any).env?.MODE === 'test');
 
 const API_BASE_URL =
-  (import.meta as any).env?.VITE_API_URL || 'http://localhost:3000/api/v1';
+  (import.meta as any).env?.VITE_API_BASE_URL ||
+  (import.meta as any).env?.VITE_API_URL ||
+  '/api/v1';
 
 // Custom in-memory state for fixtures to allow mutations during dev/test preview
 let stateSettings: any = { ...fixtureSettings };

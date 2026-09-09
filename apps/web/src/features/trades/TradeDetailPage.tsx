@@ -275,7 +275,7 @@ export const TradeDetailPage: React.FC = () => {
       <SimpleGrid cols={{ base: 1, md: 2 }} spacing="lg">
         {/* Left Column: Evidence Gallery & Visual Charts */}
         <Stack gap="md">
-          <EvidenceGallery tradeId={trade.id} />
+          <EvidenceGallery tradeId={trade.id} attachments={trade.attachments || []} />
 
           {/* Checklist Snapshot Card */}
           <Card withBorder padding="md" radius="md" style={{ backgroundColor: '#ffffff' }}>

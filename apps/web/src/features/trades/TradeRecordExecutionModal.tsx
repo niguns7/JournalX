@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Modal,
   Stack,
@@ -19,6 +19,7 @@ import {
 } from '@mantine/core';
 import { IconAlertTriangle, IconCheck } from '@tabler/icons-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { TradeDirection } from '@journalx/domain';
 import { apiClient } from '../../lib/api.js';
 import { queryKeys } from '../../lib/queryKeys.js';
@@ -37,15 +38,33 @@ export const TradeRecordExecutionModal: React.FC<TradeRecordExecutionModalProps>
   onSuccess,
 }) => {
   const queryClient = useQueryClient();
+  const todayDate = dayjs().format('YYYY-MM-DD');
+
+  const { data: todayJournal } = useQuery({
+    queryKey: queryKeys.journals.byDate(todayDate),
+    queryFn: () => apiClient.journals.createOrGet({ journalDate: todayDate }),
+  });
+
+  const effectiveJournalId = journalId && journalId !== 'jour-today' ? journalId : todayJournal?.id;
 
   const { data: accounts = [] } = useQuery({
     queryKey: queryKeys.accounts.list(),
     queryFn: () => apiClient.accounts.list(),
   });
 
-  const [accountId, setAccountId] = useState('acc-demo-50k');
-  const [instrumentId, setInstrumentId] = useState('inst-mgc');
-  const [strategyVersionId, setStrategyVersionId] = useState('sver-mgc-v1');
+  const { data: instruments = [] } = useQuery({
+    queryKey: queryKeys.instruments.list(),
+    queryFn: () => apiClient.instruments.list(),
+  });
+
+  const { data: strategies = [] } = useQuery({
+    queryKey: queryKeys.strategies.list(),
+    queryFn: () => apiClient.strategies.list(),
+  });
+
+  const [accountId, setAccountId] = useState('');
+  const [instrumentId, setInstrumentId] = useState('');
+  const [strategyVersionId, setStrategyVersionId] = useState('');
   const [direction, setDirection] = useState<TradeDirection>(TradeDirection.LONG);
   const [contractSymbol, setContractSymbol] = useState('MGCM6');
   const [actualEntry, setActualEntry] = useState('4435.00');
@@ -53,6 +72,29 @@ export const TradeRecordExecutionModal: React.FC<TradeRecordExecutionModalProps>
   const [originalTarget, setOriginalTarget] = useState('4445.00');
   const [quantity, setQuantity] = useState(5);
   const [entryTime, setEntryTime] = useState('10:08');
+
+  useEffect(() => {
+    if (accounts.length > 0 && !accountId) {
+      setAccountId(accounts[0].id);
+    }
+  }, [accounts, accountId]);
+
+  useEffect(() => {
+    if (instruments.length > 0 && !instrumentId) {
+      setInstrumentId(instruments[0].id);
+    }
+  }, [instruments, instrumentId]);
+
+  useEffect(() => {
+    if (strategies.length > 0 && !strategyVersionId) {
+      const activeVerId =
+        strategies[0].currentPublishedVersionId ||
+        strategies[0].currentPublishedVersion?.id ||
+        strategies[0].currentVersionId ||
+        strategies[0].versions?.[0]?.id;
+      if (activeVerId) setStrategyVersionId(activeVerId);
+    }
+  }, [strategies, strategyVersionId]);
 
   // Closed trade fields
   const [isClosed, setIsClosed] = useState(true);
@@ -69,7 +111,7 @@ export const TradeRecordExecutionModal: React.FC<TradeRecordExecutionModalProps>
   const recordExecutionMutation = useMutation({
     mutationFn: () =>
       apiClient.trades.recordExecution({
-        journalId,
+        journalId: effectiveJournalId || journalId,
         accountId,
         instrumentId,
         strategyVersionId,

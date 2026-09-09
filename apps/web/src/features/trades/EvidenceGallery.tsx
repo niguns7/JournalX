@@ -64,22 +64,48 @@ export const EvidenceGallery: React.FC<EvidenceGalleryProps> = ({
     },
   ]);
 
+  const uploadMutation = useMutation({
+    mutationFn: async (uploadFile: File) => {
+      const formData = new FormData();
+      formData.append('file', uploadFile);
+      if (tradeId) formData.append('tradeId', tradeId);
+      if (journalId) formData.append('journalId', journalId);
+      formData.append('stage', stage);
+      formData.append('timeframe', timeframe);
+      if (caption) formData.append('caption', caption);
+
+      return apiClient.attachments.upload(formData);
+    },
+    onSuccess: (savedAttachment) => {
+      queryClient.invalidateQueries({ queryKey: ['trades'] });
+      queryClient.invalidateQueries({ queryKey: ['journals'] });
+      setLocalAttachments((p) => [...p, savedAttachment]);
+      closeUpload();
+      setFile(null);
+      setCaption('');
+    },
+  });
+
   const handleUpload = () => {
     if (!file) return;
-    const newAtt = {
-      id: `att-${Date.now()}`,
-      originalName: file.name,
-      mimeType: file.type,
-      stage,
-      timeframe,
-      caption,
-      url: URL.createObjectURL(file),
-      createdAt: new Date().toISOString(),
-    };
-    setLocalAttachments((p) => [...p, newAtt]);
-    closeUpload();
-    setFile(null);
-    setCaption('');
+    if (tradeId || journalId) {
+      uploadMutation.mutate(file);
+    } else {
+      const newAtt = {
+        id: `att-${Date.now()}`,
+        originalName: file.name,
+        mimeType: file.type,
+        stage,
+        timeframe,
+        caption,
+        url: URL.createObjectURL(file),
+        createdAt: new Date().toISOString(),
+      };
+      setLocalAttachments((p) => [...p, newAtt]);
+      closeUpload();
+      setFile(null);
+      setCaption('');
+    }
   };
 
   const allAttachments = attachments.length > 0 ? attachments : localAttachments;
@@ -201,7 +227,7 @@ export const EvidenceGallery: React.FC<EvidenceGalleryProps> = ({
             <Button variant="default" onClick={closeUpload}>
               Cancel
             </Button>
-            <Button color="indigo" disabled={!file} onClick={handleUpload}>
+            <Button color="indigo" disabled={!file} loading={uploadMutation.isPending} onClick={handleUpload}>
               Upload Evidence
             </Button>
           </Group>

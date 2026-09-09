@@ -65,3 +65,19 @@ This document records the design choices, architectural invariants, and constrai
 ## 13. End-of-Day Review Gate & Correction Invalidation
 - **Decision**: Daily review completion blocks if any open trade exists or any closed trade has unconfirmed fees. If a trade is corrected post-review, its `reviewedAt` timestamp is automatically invalidated and reset to `null`.
 - **Rationale**: Guarantees metrics reflect fully settled trades with verified brokerage fees.
+
+## 14. Relative API Base URL and Origin Resolution
+- **Decision**: In `@journalx/api-client`, dynamically resolve relative API paths (e.g. `/api/v1`) using `window.location.origin` in browser environments and fallback to loopback in Node.js test environments.
+- **Rationale**: Enables seamless reverse proxying through Vite dev server (`/api` -> `http://127.0.0.1:3000`) and standard production reverse proxies (Nginx/Caddy) without hardcoded origins or CORS misconfigurations.
+
+## 15. Dynamic Live Entity Resolution Over Hardcoded Test IDs
+- **Decision**: Frontend modals and workspaces auto-query real database entities (accounts, instruments, active published strategy versions, and date-matched journals) and bind live entity UUIDs upon load instead of falling back to mock fixture string literals.
+- **Rationale**: Guarantees zero runtime 400/404 foreign key mismatches when operating against live PostgreSQL instances.
+
+## 16. Database Restore Constraint Bypass via Replica Role
+- **Decision**: In `scripts/restore.ts`, wrap data insertion with `SET session_replication_role = 'replica';` before importing table records and `SET session_replication_role = 'origin';` upon commit.
+- **Rationale**: Prevents circular and multi-table deferred foreign key constraint violations while importing large multi-table relational backups.
+
+## 17. Pure Decimal.js Financial Reconciliation Test Suite
+- **Decision**: Maintain dedicated test vector coverage in `packages/domain/src/reconciliation.spec.ts` matching exact mathematical edge cases (MGC point values, zero-risk division safeguards, provisional fee states, no-trade day exclusion from win-rate).
+- **Rationale**: Protects accounting integrity and financial expectancy calculations against accidental regression.

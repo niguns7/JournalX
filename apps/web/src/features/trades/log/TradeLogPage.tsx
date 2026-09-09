@@ -43,7 +43,7 @@ export const TradeLogPage: React.FC<TradeLogPageProps> = ({
   onOpenRecordExecution,
 }) => {
   const navigate = useNavigate();
-  const [selectedAccountId, setSelectedAccountId] = useState<string>('acc-demo-50k');
+  const [selectedAccountId, setSelectedAccountId] = useState<string>('');
   const [selectedOutcome, setSelectedOutcome] = useState<string | null>(null);
   const [selectedReviewStatus, setSelectedReviewStatus] = useState<string | null>(null);
   const [includeVoided, setIncludeVoided] = useState(false);
@@ -54,16 +54,22 @@ export const TradeLogPage: React.FC<TradeLogPageProps> = ({
     queryFn: () => apiClient.accounts.list(),
   });
 
+  React.useEffect(() => {
+    if (accounts.length > 0 && !selectedAccountId) {
+      setSelectedAccountId(accounts[0].id);
+    }
+  }, [accounts, selectedAccountId]);
+
   const { data: tradesResponse, isLoading } = useQuery({
     queryKey: queryKeys.trades.list({
-      accountId: selectedAccountId,
+      accountId: selectedAccountId || undefined,
       outcome: selectedOutcome,
       page,
       includeVoided,
     }),
     queryFn: () =>
       apiClient.trades.list({
-        accountId: selectedAccountId,
+        accountId: selectedAccountId || undefined,
         outcome: (selectedOutcome as any) || undefined,
         includeVoided,
         page,

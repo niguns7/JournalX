@@ -19,14 +19,23 @@
     "db:fixtures": "pnpm --filter @journalx/db db:fixtures",
     "db:up": "docker compose up -d db",
     "db:down": "docker compose down",
-    "test": "pnpm --recursive run test"
+    "db:benchmark": "pnpm --filter @journalx/db db:benchmark",
+    "bench": "pnpm --filter @journalx/db db:benchmark",
+    "db:backup": "tsx scripts/backup.ts",
+    "db:restore": "tsx scripts/restore.ts",
+    "test": "pnpm --recursive run test",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^22.13.9",
+    "@types/pg": "^8.23.1",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
     "eslint": "^10.10.0",
+    "pg": "^8.23.0",
     "prettier": "^3.5.3",
+    "tsx": "^4.23.13",
     "typescript": "^5.8.2"
   }
 }

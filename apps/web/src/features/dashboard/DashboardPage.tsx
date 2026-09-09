@@ -50,7 +50,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   onOpenRecordExecution,
 }) => {
   const navigate = useNavigate();
-  const [selectedAccountId, setSelectedAccountId] = useState<string>('acc-demo-50k');
+  const [selectedAccountId, setSelectedAccountId] = useState<string>('');
   const [dateRange, setDateRange] = useState<string>('month');
 
   // Queries
@@ -59,9 +59,15 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     queryFn: () => apiClient.accounts.list(),
   });
 
+  React.useEffect(() => {
+    if (accounts.length > 0 && !selectedAccountId) {
+      setSelectedAccountId(accounts[0].id);
+    }
+  }, [accounts, selectedAccountId]);
+
   const { data: summary } = useQuery({
-    queryKey: queryKeys.analytics.summary({ accountId: selectedAccountId }),
-    queryFn: () => apiClient.analytics.getSummary({ accountId: selectedAccountId }),
+    queryKey: queryKeys.analytics.summary({ accountId: selectedAccountId || undefined }),
+    queryFn: () => apiClient.analytics.getSummary({ accountId: selectedAccountId || undefined }),
   });
 
   const { data: todayJournal } = useQuery({

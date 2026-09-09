@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-09-09T15:51:43.105Z",
+  "database": {
+    "fileName": "database.sql",
+    "checksum": "2e2f0891261966f2cd1e6d4c11eb349aea0787e46e7b29d86b973bebb20cd3ae",
+    "tableCounts": {
+      "app_settings": 1,
+      "trading_accounts": 20,
+      "instruments": 20,
+      "strategies": 12,
+      "strategy_versions": 29,
+      "daily_journals": 15,
+      "journal_account_limits": 143,
+      "journal_windows": 11,
+      "economic_events": 11,
+      "timeframe_analyses": 11,
+      "market_zones": 11,
+      "journal_scenarios": 11,
+      "quarter_observations": 11,
+      "trades": 5000,
+      "trade_checklist_answers": 110,
+      "trade_management_events": 22,
+      "trade_violations": 67,
+      "attachments": 0,
+      "audit_events": 317,
+      "idempotency_requests": 11
+    }
+  },
+  "attachments": []
+}

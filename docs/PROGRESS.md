@@ -45,13 +45,13 @@
 ---
 
 ## Session 4: Integration and final verification
-- [ ] **S4-01**: Start real stack and disable fixture transport.
-- [ ] **S4-02**: Validate CORS/proxy/env and generated client.
-- [ ] **S4-03**: Connect autosave, mutations, invalidation, and errors.
-- [ ] **S4-04**: Verify actual image upload/content/removal.
-- [ ] **S4-05**: Run full user journeys in Playwright.
-- [ ] **S4-06**: Reconcile dashboard/trade/day/export totals.
-- [ ] **S4-07**: Verify production builds and persistent volumes.
-- [ ] **S4-08**: Run bounded performance check and fix bottlenecks.
-- [ ] **S4-09**: Exercise backup and restore into isolated resources.
-- [ ] **S4-10**: Complete runbooks and final acceptance report.
+- [x] **S4-01**: Start real stack and disable fixture transport (live NestJS & Postgres connected).
+- [x] **S4-02**: Validate CORS/proxy/env and generated client (`/api` proxy, relative base origin support).
+- [x] **S4-03**: Connect autosave, mutations, invalidation, and errors (optimistic locking 409 notifications).
+- [x] **S4-04**: Verify actual image upload/content/removal (Multer local filesystem evidence storage).
+- [x] **S4-05**: Run full user journeys in Playwright (9/9 journeys passing in 14.4s).
+- [x] **S4-06**: Reconcile dashboard/trade/day/export totals (8 financial reconciliation test vectors passing).
+- [x] **S4-07**: Verify production builds and persistent volumes (TypeScript, lint, and Vite builds clean).
+- [x] **S4-08**: Run bounded performance check and fix bottlenecks (5,000 synthetic records, <500ms SLA verified).
+- [x] **S4-09**: Exercise backup and restore into isolated resources (20/20 tables and attachments verified).
+- [x] **S4-10**: Complete runbooks and final acceptance report (`docs/acceptance-report.md`, `README.md`, `docs/session-4-handoff.md`).
